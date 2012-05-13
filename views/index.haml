@@ -1,0 +1,15 @@
+%div#container
+  %p
+    毎日午前2時に
+    %strong 乱れ
+    を自動投稿して共有。
+    %br for Twitter
+  %button.css3button{:onclick => 'location.href="/request_token"'}
+    登録する
+%div#search
+  %h3 最近の乱れ
+  -@search.each do |sea|
+    %div.tweet
+      %img{:src => sea.profile_image_url}
+      %a{:href => 'http://twitter.com/tivrsky/status/' + sea.id.to_s} tweet
+      %p= sea.text.gsub(/乱れ/,"<strong>乱れ</strong>")
