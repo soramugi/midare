@@ -32,5 +32,5 @@ twitOauths.each do |oauth|
 
     text = word[rand(word.length)] + "の乱れ"
 
-    #Twitter.update(text)
+    Twitter.update(text)
 end
