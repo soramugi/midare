@@ -48,7 +48,7 @@ get '/style.css' do
 end
 
 get'/' do
-    @search = Twitter.search('の乱れ -RT', :length => 'ja', :rpp => 3)
+    @search = Twitter.search('の乱れ #乱れ -RT', :length => 'ja', :rpp => 3)
     haml :index
 end
 
@@ -98,7 +98,7 @@ get '/access_token' do
         config.oauth_token        = access_token.token
         config.oauth_token_secret = access_token.secret
     end
-    Twitter.update("精神の乱れに登録しました #{base_url}")
+    Twitter.update("精神の乱れに登録しました #{base_url} #乱れ")
 
     redirect '/'
 end

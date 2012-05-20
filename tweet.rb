@@ -30,7 +30,7 @@ twitOauths.each do |oauth|
         twitOauths.filter(:id => oauth[:id]).update(:name_id => Twitter.user.screen_name)
     end
 
-    text = word[rand(word.length)] + "の乱れ"
+    text = word[rand(word.length)] + "の乱れ #乱れ"
 
     Twitter.update(text)
 end
