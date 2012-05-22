@@ -4,7 +4,7 @@ require 'rubygems'
 require 'sequel'
 require 'twitter'
 
-DB = Sequel.connect('sqlite://midare.db')
+DB = Sequel.connect('sqlite:'+ File.expand_path(File.dirname(__FILE__)) +'//midare.db')
 twitConsumer = DB[:twitConsumer]
 twitOauths = DB[:twitOauth].filter(:status_flag => 0)
 words = DB[:word].filter(:status_flag => 0)
