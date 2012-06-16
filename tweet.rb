@@ -4,18 +4,15 @@ require 'rubygems'
 require 'sequel'
 require 'twitter'
 
-DB = Sequel.connect('sqlite:'+ File.expand_path(File.dirname(__FILE__)) +'//midare.db')
+file_path = File.expand_path(File.dirname(__FILE__))
+DB        = Sequel.connect('sqlite:'+ file_path +'//midare.db')
 twitConsumer = DB[:twitConsumer]
 twitOauths   = DB[:twitOauth].filter(:status_flag => 0)
-words        = DB[:word].filter(:status_flag => 0)
 
-CONSUMER_KEY = twitConsumer.first[:key]
+CONSUMER_KEY    = twitConsumer.first[:key]
 CONSUMER_SECRET = twitConsumer.first[:secret]
 
-word = []
-words.each do |w|
-  word.push(w[:word])
-end
+words = open(file_path +'//word.txt').readlines
 
 twitOauths.each do |oauth|
 
@@ -32,7 +29,7 @@ twitOauths.each do |oauth|
     twitOauths.filter(:id => oauth[:id]).update(:name_id => Twitter.user.screen_name)
   end
 
-  text = word[rand(word.length)] + "の乱れ #乱れ"
+  word = words.shuffle.first.chomp + "の乱れ #乱れ"
 
-  Twitter.update(text) rescue next
+  Twitter.update(word) rescue next
 end
