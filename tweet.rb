@@ -1,18 +1,21 @@
 #!/usr/bin/ruby
 # encoding : utf-8
-require 'rubygems'
+require 'pit'
 require 'sequel'
 require 'twitter'
 
 file_path = File.expand_path(File.dirname(__FILE__))
 DB        = Sequel.connect('sqlite:'+ file_path +'//midare.db')
-twitConsumer = DB[:twitConsumer]
+
 twitOauths   = DB[:twitOauth].filter(:status_flag => 0)
+pit = Pit.get("twitter_midare", :require => {
+  "consumer_key"    => "consumer key",
+  "consumer_secret" => "consumer secret"
+})
 
-CONSUMER_KEY    = twitConsumer.first[:key]
-CONSUMER_SECRET = twitConsumer.first[:secret]
-
-words = open(file_path +'/word.txt').readlines
+CONSUMER_KEY    = pit['consumer_key']
+CONSUMER_SECRET = pit['consumer_secret']
+words           = open(file_path +'/word.txt').readlines
 
 twitOauths.each do |oauth|
 
