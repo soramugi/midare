@@ -12,7 +12,7 @@ twitOauths   = DB[:twitOauth].filter(:status_flag => 0)
 CONSUMER_KEY    = twitConsumer.first[:key]
 CONSUMER_SECRET = twitConsumer.first[:secret]
 
-words = open(file_path +'//word.txt').readlines
+words = open(file_path +'/word.txt').readlines
 
 twitOauths.each do |oauth|
 
