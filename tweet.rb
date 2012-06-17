@@ -15,7 +15,7 @@ pit = Pit.get("twitter_midare", :require => {
 
 CONSUMER_KEY    = pit['consumer_key']
 CONSUMER_SECRET = pit['consumer_secret']
-words           = open(file_path +'/word.txt').readlines
+words           = open(file_path +'/word.txt', :encoding => Encoding::UTF_8).readlines
 
 twitOauths.each do |oauth|
 
