@@ -5,7 +5,7 @@ require 'sequel'
 require 'twitter'
 
 file_path = File.expand_path(File.dirname(__FILE__))
-DB        = Sequel.connect('sqlite:'+ file_path +'//midare.db')
+DB        = Sequel.connect('sqlite:'+ file_path +'//midare.db', :timeout => 1000)
 
 twitOauths   = DB[:twitOauth].filter(:status_flag => 0)
 pit = Pit.get("twitter_midare", :require => {
