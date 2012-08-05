@@ -7,7 +7,7 @@ require 'twitter'
 file_path = File.expand_path(File.dirname(__FILE__))
 DB        = Sequel.connect(
   'sqlite:'+ file_path +'//midare.db',
-  :timeout => 1000
+  :timeout => 2000
 )
 
 twitOauths   = DB[:twitOauth].filter(:status_flag => 0)
