@@ -28,28 +28,30 @@ words           = open(
 
 twitOauths.each do |oauth|
 
-  Twitter.configure do |config|
-    config.consumer_key       = CONSUMER_KEY
-    config.consumer_secret    = CONSUMER_SECRET
-    config.oauth_token        = oauth[:toekn]
-    config.oauth_token_secret = oauth[:toekn_secret]
-  end
+  Thread.start {
+    Twitter.configure do |config|
+      config.consumer_key       = CONSUMER_KEY
+      config.consumer_secret    = CONSUMER_SECRET
+      config.oauth_token        = oauth[:toekn]
+      config.oauth_token_secret = oauth[:toekn_secret]
+    end
 
-  # 認証解除している人を確認,ユーザーネームが取ってこれるか
-  Twitter.user rescue next
+    # 認証解除している人を確認,ユーザーネームが取ってこれるか
+    Twitter.user rescue next
 
-  # TwitterIDを登録、前回からIDが変わっていないか
-  if oauth[:name_id] != Twitter.user.screen_name then
-    twitOauths.filter(
-      :id => oauth[:id]
-    ).update(
-      :name_id => Twitter.user.screen_name
-    )
-  end
+    # TwitterIDを登録、前回からIDが変わっていないか
+    if oauth[:name_id] != Twitter.user.screen_name then
+      twitOauths.filter(
+        :id => oauth[:id]
+      ).update(
+        :name_id => Twitter.user.screen_name
+      )
+    end
 
-  # ツイートする単語を決定
-  word = words.shuffle.first.chomp + "の乱れ #乱れ"
+    # ツイートする単語を決定
+    word = words.shuffle.first.chomp + "の乱れ #乱れ"
 
-  # ツイート
-  Twitter.update(word) rescue next
+    # ツイート
+    Twitter.update(word) rescue next
+  }
 end
