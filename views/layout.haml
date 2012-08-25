@@ -9,6 +9,11 @@
   %body
     %h1 精神の乱れ
     != yield
+    #footer
+      %p
+        created by
+        %a{'href' => 'http://twitter.com/soramugi'}
+          @soramugi
     #adsense
       :javascript
         google_ad_client = "ca-pub-4852336706153454";
@@ -17,8 +22,3 @@
         google_ad_width = 728;
         google_ad_height = 90;
       %script{:src=>'http://pagead2.googlesyndication.com/pagead/show_ads.js'}
-    #footer
-      %p
-        created by
-        %a{'href' => 'http://twitter.com/soramugi'}
-          @soramugi

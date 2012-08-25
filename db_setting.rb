@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # encoding : utf-8
-require 'pit'
 require 'sequel'
+require 'pit'
 require 'twitter'
 
 file_path = File.expand_path(File.dirname(__FILE__))
@@ -10,7 +10,7 @@ DB        = Sequel.connect(
   :timeout => 2000
 )
 
-twitOauths   = DB[:user].filter(:status_flag => 0)
+user = DB[:user]
 pit = Pit.get(
   "twitter_midare",
   :require => {
@@ -24,12 +24,7 @@ Twitter.configure do |config|
   config.consumer_secret = pit['consumer_secret']
 end
 
-words = open(
-  file_path +'/word.txt',
-  :encoding => Encoding::UTF_8
-).readlines
-
-twitOauths.each do |oauth|
+user.each do |oauth|
 
   @client = Twitter::Client.new(
     :oauth_token        => oauth[:toekn],
@@ -37,11 +32,25 @@ twitOauths.each do |oauth|
   )
 
   # 認証解除してないか確認
-  @client.user rescue next
+  begin
+    @client.user
+  rescue
+    user.filter(:id => oauth[:id]).update(:status_flag => 1)
+    next
+  end
 
-  # ツイートする単語を決定
-  word = words.shuffle.first.chomp + "の乱れ #乱れ"
+  # 認証確認、再有効
+  if oauth[:status_flag] == 1 then
+    user.filter(:id => oauth[:id]).update(:status_flag => 0)
+  end
 
-  # ツイート
-  Twitter.update(word) rescue next
+  # 前回からTwitterIDが変わっていないか、変わっていたら登録し直し
+  if oauth[:twitter_id] != @client.user.screen_name then
+    p 'hi'
+    user.filter(
+      :id => oauth[:id]
+    ).update(
+      :twitter_id => @client.user.screen_name
+    )
+  end
 end

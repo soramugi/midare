@@ -36,7 +36,6 @@ end
 
 def oauth_consumer
   pit = Pit.get("twitter_midare")
-  twitConsumer = DB[:twitConsumer]
   OAuth::Consumer.new(
     pit['consumer_key'],
     pit['consumer_secret'],
@@ -66,7 +65,7 @@ get '/request_token' do
 end
 
 get '/access_token' do
-  twitOauth = DB[:twitOauth]
+  user = DB[:user]
   pit = Pit.get("twitter_midare")
 
   request_token = OAuth::RequestToken.new(
@@ -79,17 +78,22 @@ get '/access_token' do
     :oauth_token => params[:oauth_token],
     :oauth_verifier => params[:oauth_verifier]
   )
-  #トークンの再登録防止
-  twitOauth.each do | oauth |
+  #多重の登録防止
+  user.each do | oauth |
     if oauth[:toekn] == access_token.token then
+      user.filter(
+        :id => oauth[:id]
+      ).update(
+        :status_flag => 0
+      )
       redirect '/'
     end
   end
   #登録
-  twitOauth.insert(
+  user.insert(
     :toekn        => access_token.token,
     :toekn_secret => access_token.secret,
-    :posted_date  => Time.now.strftime('%Y-%m-%d %H:%M:%S'),
+    :create_at  => Time.now.strftime('%Y-%m-%d %H:%M:%S'),
     :status_flag  => 0
   )
 

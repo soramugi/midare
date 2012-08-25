@@ -2,11 +2,11 @@ require 'rubygems'
 require 'sequel'
 DB = Sequel.connect('sqlite://midare.db')
 
-DB.create_table :twitOauth do
+DB.create_table :user do
   primary_key :id
-  text :name_id
+  text :twitter_id
   text :toekn
   text :toekn_secret
-  text :posted_date
-  Float :status_flag
+  text :create_at
+  integer :status_flag
 end
