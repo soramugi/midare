@@ -46,7 +46,6 @@ user.each do |oauth|
 
   # 前回からTwitterIDが変わっていないか、変わっていたら登録し直し
   if oauth[:twitter_id] != @client.user.screen_name then
-    p 'hi'
     user.filter(
       :id => oauth[:id]
     ).update(
