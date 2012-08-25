@@ -19,33 +19,25 @@ pit = Pit.get(
   }
 )
 
-CONSUMER_KEY    = pit['consumer_key']
-CONSUMER_SECRET = pit['consumer_secret']
-words           = open(
+Twitter.configure do |config|
+  config.consumer_key    = pit['consumer_key']
+  config.consumer_secret = pit['consumer_secret']
+end
+
+words = open(
   file_path +'/word.txt',
   :encoding => Encoding::UTF_8
 ).readlines
 
 twitOauths.each do |oauth|
 
-  Twitter.configure do |config|
-    config.consumer_key       = CONSUMER_KEY
-    config.consumer_secret    = CONSUMER_SECRET
-    config.oauth_token        = oauth[:toekn]
-    config.oauth_token_secret = oauth[:toekn_secret]
-  end
+  @client = Twitter::Client.new(
+    :oauth_token        => oauth[:toekn],
+    :oauth_token_secret => oauth[:toekn_secret]
+  )
 
-  # 認証解除している人を確認,ユーザーネームが取ってこれるか
-  Twitter.user rescue next
-
-  # TwitterIDを登録、前回からIDが変わっていないか
-  if oauth[:name_id] != Twitter.user.screen_name then
-    twitOauths.filter(
-      :id => oauth[:id]
-    ).update(
-      :name_id => Twitter.user.screen_name
-    )
-  end
+  # 認証解除してないか確認
+  @client.user rescue next
 
   # ツイートする単語を決定
   word = words.shuffle.first.chomp + "の乱れ #乱れ"
