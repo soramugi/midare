@@ -43,5 +43,5 @@ twitOauths.each do |oauth|
   word = words.shuffle.first.chomp + "の乱れ #乱れ"
 
   # ツイート
-  Twitter.update(word) rescue next
+  @client.update(word) rescue next
 end
