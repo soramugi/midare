@@ -30,21 +30,17 @@ words = open(
 ).readlines
 
 twitOauths.each do |oauth|
-  @t = Thread.start do
-    @client = Twitter::Client.new(
-      :oauth_token        => oauth[:toekn],
-      :oauth_token_secret => oauth[:toekn_secret]
-    )
+  @client = Twitter::Client.new(
+    :oauth_token        => oauth[:toekn],
+    :oauth_token_secret => oauth[:toekn_secret]
+  )
 
-    # 認証解除してないか確認
-    @client.user rescue next
+  # 認証解除してないか確認
+  @client.user rescue next
 
-    # ツイートする単語を決定
-    word = words.shuffle.first.chomp + "の乱れ #乱れ"
+  # ツイートする単語を決定
+  word = words.shuffle.first.chomp + "の乱れ #乱れ"
 
-    # ツイート
-    @client.update(word) rescue next
-  end
+  # ツイート
+  @client.update(word) rescue next
 end
-
-@t.join
