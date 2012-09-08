@@ -24,12 +24,7 @@ Twitter.configure do |config|
   config.consumer_secret = pit['consumer_secret']
 end
 
-users = []
 user.each do |oauth|
-  users << oauth
-end
-
-users.each do |oauth|
 
   @client = Twitter::Client.new(
     :oauth_token        => oauth[:toekn],
