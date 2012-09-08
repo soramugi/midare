@@ -10,7 +10,7 @@ DB        = Sequel.connect(
   :timeout => 2000
 )
 
-user = DB[:user]
+users = DB[:user]
 pit = Pit.get(
   "twitter_midare",
   :require => {
@@ -24,30 +24,30 @@ Twitter.configure do |config|
   config.consumer_secret = pit['consumer_secret']
 end
 
-user.each do |oauth|
+users.each do |user|
 
   @client = Twitter::Client.new(
-    :oauth_token        => oauth[:toekn],
-    :oauth_token_secret => oauth[:toekn_secret]
+    :oauth_token        => user[:toekn],
+    :oauth_token_secret => user[:toekn_secret]
   )
 
   # 認証解除してないか確認
   begin
     @client.user
   rescue
-    user.filter(:id => oauth[:id]).update(:status_flag => 1)
+    users.filter(:id => user[:id]).update(:status_flag => 1)
     next
   end
 
   # 認証確認、再有効
-  if oauth[:status_flag] == 1 then
-    user.filter(:id => oauth[:id]).update(:status_flag => 0)
+  if user[:status_flag] == 1 then
+    users.filter(:id => user[:id]).update(:status_flag => 0)
   end
 
   # 前回からTwitterIDが変わっていないか、変わっていたら登録し直し
-  if oauth[:twitter_id] != @client.user.screen_name then
-    user.filter(
-      :id => oauth[:id]
+  if user[:twitter_id] != @client.user.screen_name then
+    users.filter(
+      :id => user[:id]
     ).update(
       :twitter_id => @client.user.screen_name
     )
