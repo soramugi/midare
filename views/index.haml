@@ -6,10 +6,3 @@
     %br for Twitter
   %a{:href => "/request_token"}
     登録する
-%div#search
-  %h3 最近の乱れ
-  -@search.each do |sea|
-    %div.tweet
-      %img{:src => sea.profile_image_url}
-      %a{:href => 'http://twitter.com/tivrsky/status/' + sea.id.to_s} tweet
-      %p= sea.text.gsub(/乱れ/,"<strong>乱れ</strong>")
