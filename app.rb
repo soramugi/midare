@@ -49,7 +49,6 @@ get '/style.css' do
 end
 
 get'/' do
-  @search = Twitter.search('乱れ -RT', :length => 'ja', :rpp => 2)
   haml :index
 end
 

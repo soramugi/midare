@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sqlite3'
+gem 'sequel'
+gem 'sass'
+gem 'twitter'
+gem 'oauth'
+gem 'pit'
+gem 'haml'

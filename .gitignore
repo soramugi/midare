@@ -1,2 +1,6 @@
 .sass-cache/*
 midare.db
+vendor/bundle/*
+.bundle
+.DS_Store
+Gemfile.lock

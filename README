@@ -2,15 +2,3 @@
 for Twitter
 
 毎日午前2時に精神的な乱れを自動投稿、精神が乱れても一人じゃ無い。
-
-ヘルパーだったりデータベースの階層分けなかったから何がどんなファイルだか訳ワカメだからちょっと説明するね！
-メンドクサイね！
-次から気を付けるね！
-
-app.rb -> sinatra実行ファイル
-tweet.rb -> 自動ツイート実行ファイル。cronで叩く
-setSqlite.rb -> key,secretにTwitterのアレを登録しといてruby setSqlite.rbで実行、midare.dbを作成
-midare.db -> sqlite3のデータベースだよ！ oauthとtokenとwordを格納
-word.txt -> つぶやく内容を記載しておくよ！ここに記載しただけでも投稿するwordとして選択されないよ！
-updateWord.rb -> word.txtの内容をmidare.dbのwordテーブルに書き換えるよ！
-views/ -> sinatraのテンプレート群
