@@ -17,7 +17,7 @@ class DbSet
   end
 
   def settings
-    thread_max = 10
+    thread_max = 100
 
     jobqueue = Queue.new
     @users.each do |client|

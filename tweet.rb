@@ -20,7 +20,7 @@ class Midare
   end
 
   def thread_tweet
-    thread_max = 10
+    thread_max = 100
 
     jobqueue = Queue.new
     @users.each do |client|
