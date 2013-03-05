@@ -1,6 +1,6 @@
 .sass-cache/*
 midare.db
-vendor/bundle/*
+vendor/*
 .bundle
 .DS_Store
 Gemfile.lock

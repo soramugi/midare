@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'sinatra'
 gem 'sqlite3'
@@ -8,3 +8,4 @@ gem 'twitter'
 gem 'oauth'
 gem 'pit'
 gem 'haml'
+gem 'shotgun'
