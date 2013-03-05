@@ -8,7 +8,7 @@ class DbSet
 
   def initialize
     path = File.expand_path(File.dirname(__FILE__))
-    db = Sequel.connect('sqlite:' + path + '//midare.db')
+    db = Sequel.connect('sqlite:' + path + '//../db/midare.db')
     @users = db[:user]
     @pit = Pit.get("twitter_midare", :require => {
       "consumer_key"    => "consumer key",

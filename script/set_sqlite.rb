@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sequel'
-DB = Sequel.connect('sqlite://midare.db')
+DB = Sequel.connect('sqlite://db/midare.db')
 
 DB.create_table :user do
   primary_key :id

@@ -8,7 +8,7 @@ class Midare
 
   def initialize
     path = File.expand_path(File.dirname(__FILE__)).to_s
-    db = Sequel.connect('sqlite:' + path + '//midare.db')
+    db = Sequel.connect('sqlite:' + path + '//../db/midare.db')
 
     @users = db[:user].filter(:status_flag => 0)
     @pit = Pit.get("twitter_midare", :require => {
@@ -16,7 +16,7 @@ class Midare
       "consumer_secret" => "consumer secret"
     })
 
-    @words = open(path + '/word.txt', :encoding => Encoding::UTF_8).readlines
+    @words = open(path + '/../db/word.txt', :encoding => Encoding::UTF_8).readlines
   end
 
   def thread_tweet
