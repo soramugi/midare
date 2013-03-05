@@ -7,7 +7,7 @@ require 'twitter'
 require 'oauth'
 require 'sequel'
 require 'pit'
-DB = Sequel.connect('sqlite://midare.db')
+DB = Sequel.connect('sqlite://db/midare.db')
 
 error do
   redirect '/'
