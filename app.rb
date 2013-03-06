@@ -39,7 +39,7 @@ def oauth_consumer
   OAuth::Consumer.new(
     pit['consumer_key'],
     pit['consumer_secret'],
-    :site => "http://twitter.com"
+    :site => "https://api.twitter.com"
   )
 end
 
